@@ -3,6 +3,8 @@ package com.example.demo.api;
 import com.example.demo.model.Person;
 import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class PersonController {
     }
 
     @PostMapping
-    public void addPerson(@RequestBody Person person){
+    public void addPerson(@Validated @NonNull @RequestBody Person person){
         personService.addPerson(person);
     }
 
@@ -41,7 +43,7 @@ public class PersonController {
     }
 
     @PutMapping(path = "{id}")
-    public void updatePerson(@RequestBody Person personToUpdate, @PathVariable("id") UUID id){
+    public void updatePerson(@Validated @NonNull @RequestBody Person personToUpdate, @PathVariable("id") UUID id){
         personService.updatePerson(id, personToUpdate);
     }
 }
