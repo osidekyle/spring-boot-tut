@@ -1,13 +1,6 @@
 package com.example.demo.dao;
 
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import co.elastic.clients.transport.ElasticsearchTransport;
-import co.elastic.clients.transport.rest_client.RestClientTransport;
 import com.example.demo.model.Person;
-import org.apache.http.HttpHost;
-import org.elasticsearch.client.ElasticsearchClient;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -17,24 +10,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository("elastic")
+@Repository("postgres")
 public class PersonDataAccessService implements PersonDao{
 
-    private final ElasticsearchClient client;
+    private final JdbcTemplate jdbcTemplate;
 
-
-    public PersonDataAccessService(){
-        // Create the low-level client
-        RestClient restClient = RestClient.builder(
-                new HttpHost("localhost", 9200)).build();
-
-        // Create the transport with a Jackson mapper
-        ElasticsearchTransport transport = new RestClientTransport(
-                restClient, new JacksonJsonpMapper());
-
-        // And create the API client
-        ElasticsearchClient client = new ElasticsearchClient(transport);
-        this.client = client;
+    @Autowired
+    public PersonDataAccessService(JdbcTemplate jdbcTemplate){
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -44,13 +27,21 @@ public class PersonDataAccessService implements PersonDao{
 
     @Override
     public List<Person> selectAllPeople() {
-
+        final String sql = "SELECT id,name FROM person";
+        return jdbcTemplate.query(sql, (resultSet, i) -> {
+            return new Person(UUID.fromString(resultSet.getString("id")),
+                    resultSet.getString("name"));
+        });
     }
 
     @Override
     public Optional<Person> selectPersonById(UUID id)
     {
-
+        final String sql = "SELECT id,name FROM person WHERE id = ?";
+        Person person = jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) ->{
+            return new Person(UUID.fromString(resultSet.getString("id")), resultSet.getString("name"));
+        });
+        return Optional.ofNullable(person);
     }
 
     @Override
