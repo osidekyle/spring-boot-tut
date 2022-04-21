@@ -5,6 +5,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import java.util.UUID;
+
 @Document(indexName = "news_index")
 public class Story {
     @Id
@@ -21,4 +23,12 @@ public class Story {
 
     @Field(type = FieldType.Text, name = "guid")
     private String guid;
+
+    public void setId(String id){
+        this.id = id;
+    }
+
+    public String getId(){
+        return this.id;
+    }
 }
