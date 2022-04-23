@@ -26,7 +26,12 @@ public class StoryController {
     }
 
     @GetMapping("/{id}")
-    public Story save(@PathVariable final String id){
+    public Story findById(@PathVariable final String id){
         return storyService.findById(id);
+    }
+
+    @GetMapping
+    public Iterable<Story> findAll(){
+        return storyService.findAll();
     }
 }

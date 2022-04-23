@@ -5,6 +5,8 @@ import com.example.demo.model.Story;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class StoryService {
 
@@ -21,6 +23,10 @@ public class StoryService {
 
     public Story findById(final String id){
         return storyRepository.findById(id).orElse(null);
+    }
+
+    public Iterable<Story> findAll(){
+        return storyRepository.findAll();
     }
 
 }
