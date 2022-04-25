@@ -1,8 +1,2 @@
-app:
-  datasource:
-    jdbc-url: jdbc:postgresql://localhost:5432/demodb
-    username: postgres
-    password: mysecretpassword
-    pool-size: 30
 server:
   port : 8081
