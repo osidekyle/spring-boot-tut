@@ -25,7 +25,7 @@ public class StoryService {
         return storyRepository.findById(id).orElse(null);
     }
 
-    public Iterable<Story> findAll(){
+    public List<Story> findAll(){
         return storyRepository.findAll();
     }
 

@@ -31,7 +31,7 @@ public class StoryController {
     }
 
     @GetMapping
-    public Iterable<Story> findAll(){
+    public List<Story> findAll(){
         return storyService.findAll();
     }
 }
