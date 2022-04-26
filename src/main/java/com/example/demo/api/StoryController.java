@@ -25,6 +25,11 @@ public class StoryController {
         storyService.save(story);
     }
 
+    @PostMapping
+    public void saveAll(@RequestBody final List<Story> stories){
+        storyService.saveAll(stories);
+    }
+
     @GetMapping("/{id}")
     public Story findById(@PathVariable final String id){
         return storyService.findById(id);
@@ -33,5 +38,10 @@ public class StoryController {
     @GetMapping
     public List<Story> findAll(){
         return storyService.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable final String id){
+        storyService.deleteById(id);
     }
 }

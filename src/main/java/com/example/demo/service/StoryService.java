@@ -29,12 +29,12 @@ public class StoryService {
         return storyRepository.findAll();
     }
 
-    public void createStoryIndexBulk(final List<Story> stories){
-        storyRepository.saveAll(stories);
+    public void deleteById(final String id){
+        storyRepository.deleteById(id);
     }
 
-    public void createProductIndex(final Story story){
-        storyRepository.save(story);
+    public void saveAll(final List<Story> stories){
+        storyRepository.saveAll(stories);
     }
 
 }
