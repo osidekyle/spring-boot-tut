@@ -29,4 +29,12 @@ public class StoryService {
         return storyRepository.findAll();
     }
 
+    public void createStoryIndexBulk(final List<Story> stories){
+        storyRepository.saveAll(stories);
+    }
+
+    public void createProductIndex(final Story story){
+        storyRepository.save(story);
+    }
+
 }
