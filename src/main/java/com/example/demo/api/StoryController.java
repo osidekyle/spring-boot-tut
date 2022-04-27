@@ -44,4 +44,14 @@ public class StoryController {
     public void deleteById(@PathVariable final String id){
         storyService.deleteById(id);
     }
+
+    @GetMapping("/title/{title}")
+    public List<Story> getStoryByTitle(@PathVariable final String title){
+        return storyService.findStoryByTitle(title);
+    }
+
+    @GetMapping("/description/{description}")
+    public List<Story> getStoryByDescription(@PathVariable final String description){
+        return storyService.findStoryByDescription(description);
+    }
 }
