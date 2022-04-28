@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.Query;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,7 +28,12 @@ public class StoryService {
     }
 
     public void save(final Story story){
-        storyRepository.save(story);
+
+            IndexQuery query = new IndexQueryBuilder()
+                    .withObject(story)
+                    .build();
+
+        elasticsearchOperations.index(query, IndexCoordinates.of("news_index"));
     }
 
     public Story findById(final String id){

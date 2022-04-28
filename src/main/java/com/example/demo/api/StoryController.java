@@ -22,10 +22,12 @@ public class StoryController {
 
     @PostMapping
     public void save(@RequestBody final Story story){
+
+
         storyService.save(story);
     }
 
-    @PostMapping
+    @PostMapping("/bulk")
     public void saveAll(@RequestBody final List<Story> stories){
         storyService.saveAll(stories);
     }

@@ -10,5 +10,4 @@ public interface StoryRepository extends ElasticsearchRepository<Story, String> 
 
     List<Story> findAll();
 
-
 }
