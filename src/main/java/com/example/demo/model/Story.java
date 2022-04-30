@@ -16,15 +16,11 @@ public class Story {
     @Id
     private String id;
 
-    @Field(type = FieldType.Text)
     private String title;
 
-    @Field(type = FieldType.Text)
     private String description;
 
-    @Field(type = FieldType.Text)
     private String pubDate;
 
-    @Field(type = FieldType.Text)
     private String guid;
 }

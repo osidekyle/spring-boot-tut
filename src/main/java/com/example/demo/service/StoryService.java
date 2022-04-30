@@ -4,6 +4,7 @@ import com.example.demo.dao.StoryRepository;
 import com.example.demo.model.Story;
 
 import org.apache.lucene.util.QueryBuilder;
+import org.elasticsearch.index.Index;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,13 @@ import java.util.List;
 public class StoryService {
 
     private final StoryRepository storyRepository;
+
+    @Autowired
     private ElasticsearchOperations elasticsearchOperations;
 
     @Autowired
     public StoryService(StoryRepository storyRepository){
         this.storyRepository = storyRepository;
-    }
-
-    public void save(final Story story){
-
-            IndexQuery query = new IndexQueryBuilder()
-                    .withObject(story)
-                    .build();
-
-        elasticsearchOperations.index(query, IndexCoordinates.of("news_index"));
     }
 
     public Story findById(final String id){
@@ -44,13 +38,6 @@ public class StoryService {
         return storyRepository.findAll();
     }
 
-    public void deleteById(final String id){
-        storyRepository.deleteById(id);
-    }
-
-    public void saveAll(final List<Story> stories){
-        storyRepository.saveAll(stories);
-    }
 
     public List<Story> findStoryByTitle(final String title){
         return matchBy("title", title);
@@ -60,6 +47,9 @@ public class StoryService {
         return matchBy("description", description);
     }
 
+    public List<Story> findStoryByDate(final String date){
+        return matchBy("pubDate", date);
+    }
 
     private List<Story> matchBy(String key, String value){
         MatchQueryBuilder queryBuilder = QueryBuilders.matchQuery(key, value);

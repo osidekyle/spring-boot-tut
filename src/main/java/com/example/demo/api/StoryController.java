@@ -20,18 +20,6 @@ public class StoryController {
         this.storyService = storyService;
     }
 
-    @PostMapping
-    public void save(@RequestBody final Story story){
-
-
-        storyService.save(story);
-    }
-
-    @PostMapping("/bulk")
-    public void saveAll(@RequestBody final List<Story> stories){
-        storyService.saveAll(stories);
-    }
-
     @GetMapping("/{id}")
     public Story findById(@PathVariable final String id){
         return storyService.findById(id);
@@ -42,11 +30,6 @@ public class StoryController {
         return storyService.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable final String id){
-        storyService.deleteById(id);
-    }
-
     @GetMapping("/title/{title}")
     public List<Story> getStoryByTitle(@PathVariable final String title){
         return storyService.findStoryByTitle(title);
@@ -55,5 +38,10 @@ public class StoryController {
     @GetMapping("/description/{description}")
     public List<Story> getStoryByDescription(@PathVariable final String description){
         return storyService.findStoryByDescription(description);
+    }
+
+    @GetMapping("/date/{date}")
+    public List<Story> getStoryByDate(@PathVariable final String date){
+        return storyService.findStoryByDate(date);
     }
 }
